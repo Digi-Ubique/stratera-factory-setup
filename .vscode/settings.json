@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e9260da0-a563-49df-9a63-a71f754d032f/resourceGroups/stratera-dev-rg/providers/Microsoft.Web/sites/stratera-factory-setup-dev",
+    "appService.deploySubpath": ".next/standalone"
+}

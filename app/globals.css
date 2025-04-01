@@ -1,0 +1,275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 220 14% 40%;
+    --primary-foreground: 220 10% 98%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 14% 20%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 14% 46%;
+
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 14% 20%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 142 40% 98%;
+
+    --border: 220 14% 90%;
+    --input: 142 31.8% 91.4%;
+    --ring: 220 14% 40%;
+
+    --radius: 0.5rem;
+
+    /* Chart colors */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 70% 50%;
+    --chart-3: 280 70% 50%;
+    --chart-4: 40 70% 50%;
+    --chart-5: 340 70% 50%;
+
+    /* Factory node colors */
+    --node-facility-bg: 210 100% 95%;
+    --node-facility-text: 210 100% 40%;
+    --node-area-bg: 120 100% 95%;
+    --node-area-text: 120 100% 30%;
+    --node-mini-factory-bg: 270 100% 95%;
+    --node-mini-factory-text: 270 100% 40%;
+    --node-line-bg: 30 100% 95%;
+    --node-line-text: 30 100% 40%;
+    --node-workstation-bg: 50 100% 95%;
+    --node-workstation-text: 50 100% 40%;
+  }
+
+  .dark {
+    --background: 220 15% 16%;
+    --foreground: 142 40% 98%;
+
+    --card: 220 15% 18%;
+    --card-foreground: 142 40% 98%;
+
+    --popover: 220 15% 16%;
+    --popover-foreground: 142 40% 98%;
+
+    --primary: 220 14% 60%;
+    --primary-foreground: 220 10% 10%;
+
+    --secondary: 220 14% 25%;
+    --secondary-foreground: 220 10% 98%;
+
+    --muted: 220 14% 20%;
+    --muted-foreground: 220 14% 75%;
+
+    --accent: 220 14% 25%;
+    --accent-foreground: 220 10% 98%;
+
+    --destructive: 0 62.8% 40.6%;
+    --destructive-foreground: 142 40% 98%;
+
+    --border: 220 14% 30%;
+    --input: 220 15% 25%;
+    --ring: 220 14% 60%;
+
+    /* Chart colors - adjusted for dark mode */
+    --chart-1: 220 70% 60%;
+    --chart-2: 160 70% 60%;
+    --chart-3: 280 70% 60%;
+    --chart-4: 40 70% 60%;
+    --chart-5: 340 70% 60%;
+
+    /* Factory node colors - dark mode */
+    --node-facility-bg: 210 30% 25%;
+    --node-facility-text: 210 100% 80%;
+    --node-area-bg: 120 30% 25%;
+    --node-area-text: 120 100% 80%;
+    --node-mini-factory-bg: 270 30% 25%;
+    --node-mini-factory-text: 270 100% 80%;
+    --node-line-bg: 30 30% 25%;
+    --node-line-text: 30 100% 80%;
+    --node-workstation-bg: 50 30% 25%;
+    --node-workstation-text: 50 100% 80%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Cross-browser compatibility fixes */
+
+/* Chrome-specific fixes */
+@supports (-webkit-appearance: none) and
+  (not (overflow: -webkit-marquee)) and
+  (not (-ms-ime-align: auto)) and
+  (not (-moz-appearance: none)) {
+  .tree-view-container,
+  .graph-view-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+
+  .dual-view-container {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+}
+
+/* Firefox-specific fixes */ \
+@-moz-document url-prefix() {
+  .tree-view-container,
+  .graph-view-container {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+  
+  .dual-view-container {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+  
+  /* Fix for Firefox SVG rendering */
+  svg {
+    overflow: visible !important;
+  }
+  
+  /* Fix for Firefox flex issues */
+  .tree-view-root,
+  .graph-view-root {
+    height: 100% !important;
+  }
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .tree-view-container,
+  .graph-view-container {
+    height: 0 !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+
+  .dual-view-container {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+}
+
+/* Common styles for all browsers */
+.tree-view-root,
+.graph-view-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Ensure containers have proper overflow */
+.tree-view-container,
+.graph-view-container {
+  position: relative;
+  overflow: auto;
+}
+
+/* Content should not shrink */
+.tree-view-content,
+.graph-svg {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Tree view specific styles */
+.tree-view-nodes {
+  width: 100%;
+}
+
+.tree-node {
+  width: 100%;
+}
+
+.tree-children {
+  width: 100%;
+}
+
+/* Graph node animations */
+.graph-node {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.graph-link {
+  transition: stroke 0.3s ease, stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+}
+
+/* Ensure SVG elements are visible */
+svg {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+svg * {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Animation effects */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Visual effects */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-effect {
+  background: rgba(34, 34, 34, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #1b5e20, #2e7d32, #388e3c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(45deg, #4caf50, #66bb6a, #81c784);
+}
+
