@@ -1,0 +1,16 @@
+name: '🧪 CI — Delegated Test Pipeline'
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  run-tests:
+    name: 'Run Org Test Framework'
+    uses: digi-ubique-stratera/testing/.github/workflows/ci-test.yml@main  # testing repo lives in digi-ubique-stratera org
+    with:
+      node-version: '20'
+      app-url: 'http://localhost:3000'
+    secrets: inherit
