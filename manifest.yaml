@@ -1,0 +1,62 @@
+# Testing Framework Manifest
+# Customise per-repo. The CI pipeline reads this file.
+
+project:
+  name: stratera-factory-setup
+  framework: nextjs
+  language: typescript
+  package_manager: npm
+
+test_targets:
+  base_url: http://localhost:3000
+  staging_url: ${STAGING_URL}
+  production_url: ${PRODUCTION_URL}
+
+layers:
+  unit:
+    enabled: true
+    runner: jest
+    coverage_threshold: 70
+    paths:
+      - components/**
+      - hooks/**
+      - lib/**
+      - src/**
+
+  integration:
+    enabled: true
+    runner: jest
+    paths:
+      - app/api/**
+      - src/api/**
+
+  e2e:
+    enabled: true
+    runner: playwright
+    browsers: [chromium, firefox, webkit]
+    critical_flows:
+      - name: home-load
+        entry: /
+        assertions:
+          - element_visible: body
+
+  performance:
+    enabled: true
+    runner: k6
+    ci_smoke:
+      vus: 5
+      duration: 30s
+      p95_threshold_ms: 3000
+    nightly:
+      stages: moderate
+      schedule: '0 3 * * *'
+
+ci:
+  provider: github_actions
+  node_version: '20'
+  timeout_minutes:
+    lint: 5
+    unit: 10
+    e2e: 15
+    perf: 5
+  cancel_in_progress: true
